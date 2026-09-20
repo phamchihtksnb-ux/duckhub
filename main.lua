@@ -3574,8 +3574,9 @@ function Fluent:CreateWindow(config)
     -- 🪟 MainWindow
     local MainWindow = Instance.new("Frame")
     MainWindow.Name = "MainWindow"
-    MainWindow.Size = UDim2.new(0, 1040, 0, 660)
-    MainWindow.Position = UDim2.new(0.5, -520, 0.5, -330)
+    -- FIX: kích thước cũ 1040x660 quá lớn, che phần lớn màn hình.
+    MainWindow.Size = UDim2.new(0, 760, 0, 520)
+    MainWindow.Position = UDim2.new(0.5, -380, 0.5, -260)
     MainWindow.BackgroundColor3 = Theme.BgWindow
     MainWindow.BackgroundTransparency = 0.05
     MainWindow.BorderSizePixel = 0
@@ -3597,8 +3598,11 @@ function Fluent:CreateWindow(config)
     BgImage.Size = UDim2.new(1, 0, 1, 0)
     BgImage.Position = UDim2.new(0, 0, 0, 0)
     BgImage.BackgroundTransparency = 1
+    -- FIX: ảnh nền cũ phủ toàn bộ cửa sổ và nhìn như ảnh che game.
+    -- Giữ object để không ảnh hưởng code khác nhưng tắt hiển thị.
     BgImage.Image = BgImageId
-    BgImage.ImageTransparency = 0.88
+    BgImage.ImageTransparency = 1
+    BgImage.Visible = false
     BgImage.ScaleType = Enum.ScaleType.Crop
     BgImage.Parent = MainWindow
 
@@ -4316,8 +4320,8 @@ function Fluent:CreateWindow(config)
     MinimizeBtn.MouseButton1Click:Connect(ToggleHubVisibility)
 
     local isFullscreen = false
-    local defaultWindowSize = UDim2.new(0, 1040, 0, 660)
-    local defaultWindowPos = UDim2.new(0.5, -520, 0.5, -330)
+    local defaultWindowSize = UDim2.new(0, 760, 0, 520)
+    local defaultWindowPos = UDim2.new(0.5, -380, 0.5, -260)
 
     local MaximizeBtn = Instance.new("TextButton")
     MaximizeBtn.Name = "MaximizeBtn"
@@ -6221,7 +6225,8 @@ local Window = Fluent:CreateWindow({
     Title = "Lurna Voidltz Hub",
     SubTitle = "Blox Fruits · Pro Glass UI",
     TabWidth = IsMobile and 130 or 160,
-    Size = IsMobile and UDim2.fromOffset(480, 490) or UDim2.fromOffset(580, 440),
+    -- Đồng bộ kích thước với MainWindow, tránh Fluent root tạo UI quá lớn.
+    Size = IsMobile and UDim2.fromOffset(420, 460) or UDim2.fromOffset(760, 520),
     Acrylic = false,
     Theme = "Dark",
     Search = true,
